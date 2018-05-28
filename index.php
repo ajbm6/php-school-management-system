@@ -1,73 +1,66 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <?php
-if(isset($_POST['adminsubmit'])){
-$adminusername=trim(addslashes($_POST['adminusername']));
-$adminpassword=md5($_POST['adminpassword']);
-include('connect.php');
-$sql="SELECT * FROM admin WHERE username='$adminusername'";
-$result=mysql_query($sql);
-$row=mysql_fetch_assoc($result);
-if($row['password']==$adminpassword){
-session_start();
-$_SESSION['adminuser']=$row;
-header('location:adminhome.php');
+	if (isset($_POST['adminsubmit'])) {
+		$adminusername = trim(addslashes($_POST['adminusername']));
+		$adminpassword = md5($_POST['adminpassword']);
+		
+		include('connect.php');
+		$sql = "SELECT * FROM admin WHERE username='$adminusername'";
+		$result = mysql_query($sql);
+		$row = mysql_fetch_assoc($result);
+		
+		if ($row['password'] == $adminpassword) {
+			session_start();
+			$_SESSION['adminuser'] = $row;
+			header('location:adminhome.php');
+		} else {
+			echo "<script>alert('Wrong Username Or Password')</script>";
+		}
+	}
 
-
-}else{
-echo "<script>alert('Wrong Username Or Password')</script>";
-}
-
-}
-
-if(isset($_POST['teachersubmit'])){
-$teacherusername=trim(addslashes($_POST['teacherusername']));
-$teacherpassword=md5($_POST['teacherpassword']);
-include('connect.php');
-$sql="SELECT * FROM teacher WHERE username='$teacherusername'";
-$result=mysql_query($sql);
-$row=mysql_fetch_assoc($result);
-if(($row['password']==$teacherpassword)&&($row['acess']==1)){
-session_start();
-$_SESSION['teacheruser']=$row;
-header('location:teacher/teacherhome.php');
-
-
-}else{
-echo "<script>alert('Wrong Username Or Password Or You Have Not Been Allowed Acess By Admin!!!')</script>";
-}
-
-}
-
-
-
+	if (isset($_POST['teachersubmit'])) {
+		$teacherusername = trim(addslashes($_POST['teacherusername']));
+		$teacherpassword = md5($_POST['teacherpassword']);
+		include('connect.php');
+		
+		$sql = "SELECT * FROM teacher WHERE username='$teacherusername'";
+		$result = mysql_query($sql);
+		$row = mysql_fetch_assoc($result);
+		if (($row['password'] == $teacherpassword) && ($row['acess'] == 1)) {
+			session_start();
+			$_SESSION['teacheruser'] = $row;
+			header('location:teacher/teacherhome.php');
+		} else {
+			echo "<script>alert('Wrong Username Or Password Or You Have Not Been Allowed Acess By Admin!!!')</script>";
+		}
+	}
 ?>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Guidance School Management</title>
-<link href="css/style.css" type="text/css" rel="stylesheet">
-<link rel="stylesheet" href="css/slider.css" type="text/css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery.flexslider-min.js"></script>
-<script src="js/script.js"></script>
-<style>
-.flex-container{
-position: relative;
-margin: 0 auto;
-padding: 50px;
-}
-
-</style>
-<script>
-$(document).ready(function () {
-	$('.flexslider').flexslider({
-		animation: 'fade',
-		controlsContainer: '.flexslider'
-	});
-});
-</script>
-</head>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Guidance School Management</title>
+		<link href="css/style.css" type="text/css" rel="stylesheet">
+		<link rel="stylesheet" href="css/slider.css" type="text/css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script src="js/jquery-1.10.2.js"></script>
+		<script src="js/jquery.flexslider-min.js"></script>
+		<script src="js/script.js"></script>
+		<style>
+			.flex-container 
+				position: relative;
+				margin: 0 auto;
+				padding: 50px;
+			}
+		</style>
+		<script>
+			$(document).ready(function () {
+				$('.flexslider').flexslider({
+					animation: 'fade',
+					controlsContainer: '.flexslider'
+				});
+			});
+		</script>
+	</head>
 
 <body>
 <div id="header">
